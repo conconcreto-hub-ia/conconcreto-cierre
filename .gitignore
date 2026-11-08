@@ -42,3 +42,6 @@ next-env.d.ts
 
 # datos contables reales de Conconcreto: nunca a git
 /datos-reales/
+
+.vercel
+.env*

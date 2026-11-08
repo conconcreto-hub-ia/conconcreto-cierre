@@ -211,7 +211,7 @@ export function redactarAviso(a: { nombre: string; periodo: string; pendientes: 
     ...a.pendientes.flatMap((p, i) => [`${i + 1}. ${p.titulo}`, ...p.detalle.split("\n").map((l) => `   ${l}`), ""]),
     "Cuando lo tengas, cárgalo en el tablero del cierre (Cargar el mes) o respóndeme por aquí con lo que sepas: si ya está, para cuándo lo tienes o si le corresponde a otra persona.",
     "",
-    "El agente del cierre · Conconcreto x irrelevant",
+    "El agente del cierre · Conconcreto",
     "(Este correo lo redactó el agente y lo aprobó una persona de contabilidad. El agente no carga nada en SAP.)",
   ].join("\n");
   return { asunto, cuerpo };
@@ -356,7 +356,7 @@ export async function recordar(cierreId: string, o: { horas?: number; marca?: st
   for (const [mensajeId, lista] of porMensaje) {
     const r = lista[0].responsable;
     if (!puedeEnviarA(r.correo)) continue;
-    const texto = `${o.marca ? `${o.marca} ` : ""}Hola, ${r.nombre.split(" ")[0]}: te recuerdo ${lista.length === 1 ? "el pendiente" : `los ${lista.length} pendientes`} del cierre de ${nombrePeriodo(cierre.periodo)} que te mandé en este hilo:\n\n${lista.map((p, i) => `${i + 1}. ${p.titulo}`).join("\n")}\n\nSi ya lo cargaste, no hace falta que contestes. Si no te corresponde, dime a quién se lo paso.\n\nEl agente del cierre · Conconcreto x irrelevant`;
+    const texto = `${o.marca ? `${o.marca} ` : ""}Hola, ${r.nombre.split(" ")[0]}: te recuerdo ${lista.length === 1 ? "el pendiente" : `los ${lista.length} pendientes`} del cierre de ${nombrePeriodo(cierre.periodo)} que te mandé en este hilo:\n\n${lista.map((p, i) => `${i + 1}. ${p.titulo}`).join("\n")}\n\nSi ya lo cargaste, no hace falta que contestes. Si no te corresponde, dime a quién se lo paso.\n\nEl agente del cierre · Conconcreto`;
     // Responder a un correo PROPIO sin `to` se lo manda al mismo buzón: hay que decir a quién va.
     await agentmail.responder(mensajeId, { text: texto, to: [r.correo] });
     await db.pendiente.updateMany({ where: { id: { in: lista.map((p) => p.id) } }, data: { avisos: { increment: 1 }, avisadoEn: new Date() } });

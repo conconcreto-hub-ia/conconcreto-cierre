@@ -18,7 +18,7 @@ export default async function Sistema() {
     <>
       <Barra />
       <Contenedor className="space-y-14 py-10">
-        <Encabezado et="Sistema de diseño" titulo="Conconcreto x irrelevant" bajada="Sale del material de la sesión 1: noche y verde Conconcreto, con el degradado oro del logo para lo que importa. Borde antes que sombra, un solo radio, Montserrat para títulos y cifras." />
+        <Encabezado et="Sistema de diseño" titulo="Conconcreto" bajada="Sale del material de la sesión 1: noche y verde Conconcreto, con el degradado oro del logo para lo que importa. Borde antes que sombra, un solo radio, Montserrat para títulos y cifras." />
 
         <section className="space-y-4">
           <SeccionEt>Marca</SeccionEt>

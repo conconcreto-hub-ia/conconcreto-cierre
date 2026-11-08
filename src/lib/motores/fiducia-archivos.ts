@@ -112,7 +112,7 @@ export async function libroConciliacion(r: ResultadoFiducia, proyecto: string): 
     "Descuadre por redondeo llevado a P429581000 (ajuste al peso).",
     ...r.marcadas.map((m) => `Para revisar: ${m.cuenta} ${m.nombre} · ${m.motivo}.`),
     ...r.observaciones,
-    "Generado por el tablero del cierre (Conconcreto x irrelevant). No se cargó nada en SAP.",
+    "Generado por el tablero del cierre (Conconcreto). No se cargó nada en SAP.",
   ].forEach((x) => no.addRow([x]));
   negrita(no);
   for (const ws of wb.worksheets) ws.columns.forEach((col) => (col.width = 18));

@@ -11,14 +11,12 @@ const cx = (...c: (string | false | null | undefined)[]) => c.filter(Boolean).jo
 
 export function Marca({ fondo = "oscuro", compacta = false }: { fondo?: "oscuro" | "claro"; compacta?: boolean }) {
   const cc = fondo === "oscuro" ? "/marca/conconcreto-blanco.svg" : "/marca/conconcreto-oscuro.svg";
-  const ir = fondo === "oscuro" ? "/marca/irrelevant-blanco.png" : "/marca/irrelevant-oscuro.png";
   return (
     <div className="flex items-center gap-3">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={cc} alt="Conconcreto" className={compacta ? "h-7 w-auto" : "h-9 w-auto"} />
-      <span className={cx("font-display font-medium", compacta ? "text-base" : "text-lg", fondo === "oscuro" ? "text-white/50" : "text-tinta-3")}>x</span>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={ir} alt="irrelevant" className={compacta ? "h-5 w-auto" : "h-6 w-auto"} />
+      <span className={cx("h-5 w-px", fondo === "oscuro" ? "bg-white/25" : "bg-linea")} />
+      <span className={cx("whitespace-nowrap font-display font-semibold", compacta ? "text-[14px]" : "text-[16px]", fondo === "oscuro" ? "text-white/85" : "text-tinta-2")}>Tablero del cierre</span>
     </div>
   );
 }

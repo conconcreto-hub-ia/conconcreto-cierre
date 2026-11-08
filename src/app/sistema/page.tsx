@@ -2,7 +2,7 @@
 
 import { exigirSesion } from "@/lib/auth/sesion";
 import { Barra } from "@/components/barra";
-import { Aja, Boton, Chip, Cifra, Contenedor, Dato, Encabezado, Encaje, Insignia, Marca, SeccionEt, Tarjeta, Vacio } from "@/components/ui";
+import { Aja, Boton, Chip, Cifra, Contenedor, Dato, Encabezado, Insignia, Marca, SeccionEt, Tarjeta, Vacio } from "@/components/ui";
 import { IconoCorreo, IconoAgente, IconoEscudo, IconoFlecha, IconoSubir, IconoDescargar, IconoCalendario, IconoBalanza, IconoCruce, IconoLista, IconoMapa, IconoAlerta } from "@/components/iconos";
 import { ESTADO, ESTADO_PENDIENTE, ESTADO_CRUCE } from "@/lib/etiquetas";
 import { CeldaEstado } from "@/components/cierre";
@@ -82,12 +82,11 @@ export default async function Sistema() {
         </section>
 
         <section className="space-y-4">
-          <SeccionEt>Cifras y encaje</SeccionEt>
+          <SeccionEt>Cifras</SeccionEt>
           <Tarjeta className="flex flex-wrap gap-10 p-6">
             <Cifra valor="9" rotulo="Sociedades que cuadran" nota="de 15" />
             <Cifra valor="12.435 M" rotulo="Diferencia más grande" />
             <Cifra valor="11" rotulo="Pendientes abiertos" />
-            <div className="space-y-2 pt-1"><Encaje valor={60} /><Encaje valor={null} /></div>
           </Tarjeta>
           <div className="banda flex flex-wrap gap-10 rounded-sup p-6">
             <Cifra oscuro valor="3" rotulo="Día hábil del cierre" />

@@ -67,7 +67,7 @@ export default async function Pendientes() {
                   <div className="flex flex-wrap items-center justify-between gap-3 border-b border-linea-2 px-5 py-4">
                     <div>
                       <h3 className="text-[17px] font-bold">{r.nombre}</h3>
-                      <p className="text-[12.5px] text-tinta-3">{r.cargo} · {r.correo}{!puedeEnviarA(r.correo) && <b className="ml-1 text-rojo">· fuera del modo prueba: el aviso queda en borrador</b>}</p>
+                      <p className="text-[12.5px] text-tinta-3">{r.cargo !== r.nombre ? `${r.cargo} · ` : ""}{r.correo}{!puedeEnviarA(r.correo) && <b className="ml-1 text-rojo">· fuera del modo prueba: el aviso queda en borrador</b>}</p>
                     </div>
                     <Insignia tono="noche">{lista.length} {lista.length === 1 ? "pendiente" : "pendientes"}</Insignia>
                   </div>

@@ -33,7 +33,7 @@ export default async function Procesos() {
             {p.demo && <div className="mt-4"><AvisoDemo /></div>}
             <dl className="m-0 mt-4 grid gap-x-8 md:grid-cols-2">
               <Dato k="Lo construyó">{p.dueno}</Dato>
-              <Dato k="Responde">{p.responsable.nombre} · {p.responsable.cargo}</Dato>
+              <Dato k="Responde">{p.responsable.nombre}{p.responsable.cargo !== p.responsable.nombre ? ` · ${p.responsable.cargo}` : ""}</Dato>
               <Dato k="Umbral de revisión">{pesos(p.umbralRevision)}</Dato>
               <Dato k="Necesita">{QUE_SE_NECESITA[p.clave]}</Dato>
             </dl>

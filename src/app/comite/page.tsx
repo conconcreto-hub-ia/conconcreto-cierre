@@ -98,7 +98,7 @@ export default async function Comite({ searchParams }: { searchParams: Promise<{
                 {c.responsables.map((r) => (
                   <Tarjeta key={r.id} className="p-5">
                     <div className="flex items-center justify-between gap-2"><h3 className="text-[15px] font-bold">{r.nombre}</h3><Insignia tono="noche">{r.pendientes.length}</Insignia></div>
-                    <p className="text-[12px] text-tinta-3">{r.cargo}</p>
+                    {r.cargo !== r.nombre && <p className="text-[12px] text-tinta-3">{r.cargo}</p>}
                     <ul className="mt-3 space-y-2 pl-0">{r.pendientes.map((p) => <li key={p.id} className="list-none text-[13.5px]"><span className="leading-snug">{p.titulo}</span><span className="ml-1.5 inline-block align-middle"><Insignia tono={ESTADO_PENDIENTE[p.estado].tono}>{ESTADO_PENDIENTE[p.estado].etiqueta}</Insignia></span></li>)}</ul>
                   </Tarjeta>
                 ))}

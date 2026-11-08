@@ -1,0 +1,821 @@
+{
+ "kpis": {
+  "sociedades": 7,
+  "partidas": 321,
+  "partidas_reciprocas": 223,
+  "referencias": 54,
+  "referencias_ok": 44,
+  "pct_auto": 81.48,
+  "lineas_ok": 192,
+  "diferencias": 9,
+  "sin_clasificar": 1,
+  "dif_neta": 372089050.0,
+  "valor_por_conciliar": 592824250.0
+ },
+ "cuadre": {
+  "dif_neta_pares": 372089050.0,
+  "dif_neta_explicada": 372089050.0,
+  "valor_abs_referencias": 592824250.0,
+  "valor_abs_diferencias": 592824250.0,
+  "cuadra": true
+ },
+ "pares": [
+  {
+   "deudor": "1000",
+   "acreedor": "1100",
+   "tipo": "comercial",
+   "saldo_a": 385924000.0,
+   "saldo_b": 472771600.0,
+   "dif": -86847600.0,
+   "refs": 11,
+   "refs_ok": 9,
+   "dif_abs": 86847600.0
+  },
+  {
+   "deudor": "1000",
+   "acreedor": "1200",
+   "tipo": "comercial",
+   "saldo_a": 481131000.0,
+   "saldo_b": 351134000.0,
+   "dif": 129997000.0,
+   "refs": 8,
+   "refs_ok": 7,
+   "dif_abs": 129997000.0
+  },
+  {
+   "deudor": "1000",
+   "acreedor": "2000",
+   "tipo": "préstamo",
+   "saldo_a": 5131500000.0,
+   "saldo_b": 4890562500.0,
+   "dif": 240937500.0,
+   "refs": 1,
+   "refs_ok": 0,
+   "dif_abs": 240937500.0
+  },
+  {
+   "deudor": "1000",
+   "acreedor": "3000",
+   "tipo": "comercial",
+   "saldo_a": 332558250.0,
+   "saldo_b": 332558250.0,
+   "dif": 0.0,
+   "refs": 3,
+   "refs_ok": 3,
+   "dif_abs": 0.0
+  },
+  {
+   "deudor": "1200",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "saldo_a": 37249000.0,
+   "saldo_b": 37249000.0,
+   "dif": 0.0,
+   "refs": 6,
+   "refs_ok": 6,
+   "dif_abs": 0.0
+  },
+  {
+   "deudor": "1300",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "saldo_a": 260292825.0,
+   "saldo_b": 174873075.0,
+   "dif": 85419750.0,
+   "refs": 10,
+   "refs_ok": 8,
+   "dif_abs": 85419750.0
+  },
+  {
+   "deudor": "1400",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "saldo_a": 83971200.0,
+   "saldo_b": 83260800.0,
+   "dif": 710400.0,
+   "refs": 9,
+   "refs_ok": 6,
+   "dif_abs": 47750400.0
+  },
+  {
+   "deudor": "1400",
+   "acreedor": "1100",
+   "tipo": "comercial",
+   "saldo_a": 30969600.0,
+   "saldo_b": 29097600.0,
+   "dif": 1872000.0,
+   "refs": 6,
+   "refs_ok": 5,
+   "dif_abs": 1872000.0
+  }
+ ],
+ "diferencias": [
+  {
+   "id": "D01",
+   "tipo": "PAGO_OTRA_FACTURA",
+   "regla": "R1",
+   "deudor": "1400",
+   "acreedor": "1000",
+   "refs": [
+    "FE-AE-0611",
+    "FE-AE-0618"
+   ],
+   "monto": 0.0,
+   "monto_abs": 23520000.0,
+   "responsable": "1400",
+   "detalle": {
+    "valor_pago": 23520000.0,
+    "dif_por_ref": {
+     "FE-AE-0611": 23520000.0,
+     "FE-AE-0618": -23520000.0
+    }
+   },
+   "evidencia": 8
+  },
+  {
+   "id": "D02",
+   "tipo": "DIF_CAMBIO",
+   "regla": "R2",
+   "deudor": "1000",
+   "acreedor": "2000",
+   "refs": [
+    "PR-2026-007"
+   ],
+   "monto": 240937500.0,
+   "monto_abs": 240937500.0,
+   "responsable": "1000",
+   "detalle": {
+    "usd": 1250000.0,
+    "trm_cierre": 3912.45,
+    "trm_libros": 4105.2,
+    "cop_libros": 5131500000.0,
+    "cop_a_trm_cierre": 4890562500.0
+   },
+   "evidencia": 2
+  },
+  {
+   "id": "D03",
+   "tipo": "CORTE",
+   "regla": "R3",
+   "deudor": "1000",
+   "acreedor": "1200",
+   "refs": [
+    "FE-CC-4471"
+   ],
+   "monto": 129997000.0,
+   "monto_abs": 129997000.0,
+   "responsable": "1200",
+   "detalle": {
+    "fecha_otro_lado": "2026-10-01",
+    "corte": "2026-09-30"
+   },
+   "evidencia": 4
+  },
+  {
+   "id": "D04",
+   "tipo": "NC_UN_LADO",
+   "regla": "R4",
+   "deudor": "1000",
+   "acreedor": "1100",
+   "refs": [
+    "NC-CC-0215"
+   ],
+   "monto": -12132400.0,
+   "monto_abs": 12132400.0,
+   "responsable": "1100",
+   "detalle": {},
+   "evidencia": 3
+  },
+  {
+   "id": "D05",
+   "tipo": "NO_CAUSADA",
+   "regla": "R5",
+   "deudor": "1300",
+   "acreedor": "1000",
+   "refs": [
+    "FE-PF-0918"
+   ],
+   "monto": 85244250.0,
+   "monto_abs": 85244250.0,
+   "responsable": "1000",
+   "detalle": {},
+   "evidencia": 3
+  },
+  {
+   "id": "D06",
+   "tipo": "DUPLICADO",
+   "regla": "R6",
+   "deudor": "1000",
+   "acreedor": "1100",
+   "refs": [
+    "FE-CC-4402"
+   ],
+   "monto": -74715200.0,
+   "monto_abs": 74715200.0,
+   "responsable": "1100",
+   "detalle": {
+    "veces": 2,
+    "valor": 74715200.0
+   },
+   "evidencia": 7
+  },
+  {
+   "id": "D07",
+   "tipo": "RETENCION",
+   "regla": "R7",
+   "deudor": "1400",
+   "acreedor": "1100",
+   "refs": [
+    "FE-AE-0764"
+   ],
+   "monto": 1872000.0,
+   "monto_abs": 1872000.0,
+   "responsable": "1400",
+   "detalle": {
+    "retencion": 1872000.0,
+    "base": 46800000.0,
+    "tasa": 4.0,
+    "cuenta_pagador": "236530"
+   },
+   "evidencia": 5
+  },
+  {
+   "id": "D08",
+   "tipo": "TRANSPOSICION",
+   "regla": "R8",
+   "deudor": "1300",
+   "acreedor": "1000",
+   "refs": [
+    "FE-PF-0897"
+   ],
+   "monto": 175500.0,
+   "monto_abs": 175500.0,
+   "responsable": "1000",
+   "detalle": {
+    "valor_emisor": 58317000,
+    "valor_receptor": 58137000
+   },
+   "evidencia": 5
+  },
+  {
+   "id": "D09",
+   "tipo": "SIN_CLASIFICAR",
+   "regla": "R9",
+   "deudor": "1400",
+   "acreedor": "1000",
+   "refs": [
+    "FE-AE-0627"
+   ],
+   "monto": 710400.0,
+   "monto_abs": 710400.0,
+   "responsable": "1400",
+   "detalle": {
+    "tambien": "1000"
+   },
+   "evidencia": 5
+  }
+ ],
+ "referencias": [
+  {
+   "ref": "FE-CC-4310",
+   "deudor": "1000",
+   "acreedor": "1100",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-CC-4314",
+   "deudor": "1000",
+   "acreedor": "1100",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-CC-4315",
+   "deudor": "1000",
+   "acreedor": "1100",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-CC-4316",
+   "deudor": "1000",
+   "acreedor": "1100",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-CC-4320",
+   "deudor": "1000",
+   "acreedor": "1100",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-CC-4324",
+   "deudor": "1000",
+   "acreedor": "1100",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-CC-4326",
+   "deudor": "1000",
+   "acreedor": "1100",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-CC-4329",
+   "deudor": "1000",
+   "acreedor": "1100",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-CC-4340",
+   "deudor": "1000",
+   "acreedor": "1100",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-CC-4402",
+   "deudor": "1000",
+   "acreedor": "1100",
+   "tipo": "comercial",
+   "dif": -74715200.0,
+   "estado": "DIFERENCIA",
+   "regla": "R6",
+   "dif_id": "D06"
+  },
+  {
+   "ref": "NC-CC-0215",
+   "deudor": "1000",
+   "acreedor": "1100",
+   "tipo": "comercial",
+   "dif": -12132400.0,
+   "estado": "DIFERENCIA",
+   "regla": "R4",
+   "dif_id": "D04"
+  },
+  {
+   "ref": "FE-CC-4471",
+   "deudor": "1000",
+   "acreedor": "1200",
+   "tipo": "comercial",
+   "dif": 129997000.0,
+   "estado": "DIFERENCIA",
+   "regla": "R3",
+   "dif_id": "D03"
+  },
+  {
+   "ref": "FE-CC-4520",
+   "deudor": "1000",
+   "acreedor": "1200",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-CC-4524",
+   "deudor": "1000",
+   "acreedor": "1200",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-CC-4525",
+   "deudor": "1000",
+   "acreedor": "1200",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-CC-4526",
+   "deudor": "1000",
+   "acreedor": "1200",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-CC-4532",
+   "deudor": "1000",
+   "acreedor": "1200",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-CC-4540",
+   "deudor": "1000",
+   "acreedor": "1200",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-CC-4545",
+   "deudor": "1000",
+   "acreedor": "1200",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "PR-2026-007",
+   "deudor": "1000",
+   "acreedor": "2000",
+   "tipo": "préstamo",
+   "dif": 240937500.0,
+   "estado": "DIFERENCIA",
+   "regla": "R2",
+   "dif_id": "D02"
+  },
+  {
+   "ref": "INV-US-118",
+   "deudor": "1000",
+   "acreedor": "3000",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "INV-US-119",
+   "deudor": "1000",
+   "acreedor": "3000",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "INV-US-120",
+   "deudor": "1000",
+   "acreedor": "3000",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-IN-0301",
+   "deudor": "1200",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-IN-0302",
+   "deudor": "1200",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-IN-0303",
+   "deudor": "1200",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-IN-0304",
+   "deudor": "1200",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-IN-0305",
+   "deudor": "1200",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-IN-0306",
+   "deudor": "1200",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-PF-0820",
+   "deudor": "1300",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-PF-0824",
+   "deudor": "1300",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-PF-0825",
+   "deudor": "1300",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-PF-0828",
+   "deudor": "1300",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-PF-0832",
+   "deudor": "1300",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-PF-0835",
+   "deudor": "1300",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-PF-0841",
+   "deudor": "1300",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-PF-0850",
+   "deudor": "1300",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-PF-0897",
+   "deudor": "1300",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "dif": 175500.0,
+   "estado": "DIFERENCIA",
+   "regla": "R8",
+   "dif_id": "D08"
+  },
+  {
+   "ref": "FE-PF-0918",
+   "deudor": "1300",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "dif": 85244250.0,
+   "estado": "DIFERENCIA",
+   "regla": "R5",
+   "dif_id": "D05"
+  },
+  {
+   "ref": "FE-AE-0540",
+   "deudor": "1400",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-AE-0543",
+   "deudor": "1400",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-AE-0548",
+   "deudor": "1400",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-AE-0550",
+   "deudor": "1400",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-AE-0552",
+   "deudor": "1400",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-AE-0556",
+   "deudor": "1400",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-AE-0611",
+   "deudor": "1400",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "dif": 23520000.0,
+   "estado": "DIFERENCIA",
+   "regla": "R1",
+   "dif_id": "D01"
+  },
+  {
+   "ref": "FE-AE-0618",
+   "deudor": "1400",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "dif": -23520000.0,
+   "estado": "DIFERENCIA",
+   "regla": "R1",
+   "dif_id": "D01"
+  },
+  {
+   "ref": "FE-AE-0627",
+   "deudor": "1400",
+   "acreedor": "1000",
+   "tipo": "comercial",
+   "dif": 710400.0,
+   "estado": "DIFERENCIA",
+   "regla": "R9",
+   "dif_id": "D09"
+  },
+  {
+   "ref": "FE-AE-0700",
+   "deudor": "1400",
+   "acreedor": "1100",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-AE-0704",
+   "deudor": "1400",
+   "acreedor": "1100",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-AE-0706",
+   "deudor": "1400",
+   "acreedor": "1100",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-AE-0709",
+   "deudor": "1400",
+   "acreedor": "1100",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-AE-0712",
+   "deudor": "1400",
+   "acreedor": "1100",
+   "tipo": "comercial",
+   "dif": 0.0,
+   "estado": "CONCILIADA",
+   "regla": "R0",
+   "dif_id": null
+  },
+  {
+   "ref": "FE-AE-0764",
+   "deudor": "1400",
+   "acreedor": "1100",
+   "tipo": "comercial",
+   "dif": 1872000.0,
+   "estado": "DIFERENCIA",
+   "regla": "R7",
+   "dif_id": "D07"
+  }
+ ],
+ "huella_python": "98dff9c3be6ee3b221919d62e02cf586f657045e359d7ab1d5914364ddbc68fc"
+}

@@ -52,6 +52,16 @@ export function haceCuanto(d: Date | string, ahora = new Date()): string {
   return fecha(d);
 }
 
+/** Pesos completos, como en un journal: "$12.435.000.000", "−$16.557". Para correos y detalles de pendientes. */
+export function pesos(valor: bigint | number | null | undefined): string {
+  if (valor === null || valor === undefined) return "Sin valor";
+  const n = Math.round(typeof valor === "bigint" ? Number(valor) : valor);
+  return `${n < 0 ? "−" : ""}$${Math.abs(n).toLocaleString("es-CO", { maximumFractionDigits: 0 })}`;
+}
+
+/** Porcentaje: "51,485 %". */
+export const porcentaje = (v: number, dec = 3) => `${(v * 100).toLocaleString("es-CO", { minimumFractionDigits: dec, maximumFractionDigits: dec })} %`;
+
 /** "cierra en 3 días", "cierra hoy", "cerró hace 2 días". */
 export function cierre(d: Date | string | null | undefined): string {
   const n = diasHasta(d);

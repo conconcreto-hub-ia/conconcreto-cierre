@@ -72,3 +72,22 @@ export const IconoTendencia = ({ className }: P) => (
 export const IconoDocumento = ({ className }: P) => (
   <svg {...base(className)}><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8l-5-5Z" /><path d="M14 3v5h5M9 13h6M9 17h6" /></svg>
 );
+/* Los del cierre */
+export const IconoSubir = ({ className }: P) => (
+  <svg {...base(className)}><path d="M12 16V4" /><path d="m7 9 5-5 5 5" /><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3" /></svg>
+);
+export const IconoDescargar = ({ className }: P) => (
+  <svg {...base(className)}><path d="M12 4v12" /><path d="m7 11 5 5 5-5" /><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3" /></svg>
+);
+export const IconoCalendario = ({ className }: P) => (
+  <svg {...base(className)}><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M3 10h18M8 3v4M16 3v4" /></svg>
+);
+export const IconoBalanza = ({ className }: P) => (
+  <svg {...base(className)}><path d="M12 4v16M7 20h10M5 7h14" /><path d="m5 7-3 6a3 3 0 0 0 6 0L5 7ZM19 7l-3 6a3 3 0 0 0 6 0l-3-6Z" /></svg>
+);
+export const IconoCruce = ({ className }: P) => (
+  <svg {...base(className)}><path d="M4 7h11l-3-3M20 17H9l3 3" /></svg>
+);
+export const IconoLista = ({ className }: P) => (
+  <svg {...base(className)}><path d="M9 6h11M9 12h11M9 18h11" /><circle cx="4.5" cy="6" r="1" /><circle cx="4.5" cy="12" r="1" /><circle cx="4.5" cy="18" r="1" /></svg>
+);

@@ -26,7 +26,12 @@ export async function leerPase(t: string | null | undefined, tipo: Pase["tipo"])
   if (!t) throw new Error("Falta el pase.");
   const app = process.env.PANEL_APP;
   if (!app) throw new Error("Esta app no está conectada al panel (falta PANEL_APP).");
-  const { payload } = await jwtVerify(t, llave(), { algorithms: ["HS256"], issuer: EMISOR, audience: app, maxTokenAge: "90s" });
+  let payload;
+  try {
+    ({ payload } = await jwtVerify(t, llave(), { algorithms: ["HS256"], issuer: EMISOR, audience: app, maxTokenAge: "90s" }));
+  } catch {
+    throw new Error("El pase no es válido o ya venció.");
+  }
   if (payload.tipo !== tipo) throw new Error("El pase no es de este tipo.");
   if (!payload.jti || !payload.sub || !payload.exp) throw new Error("El pase está incompleto.");
   const roles = Object.values(Rol) as string[];

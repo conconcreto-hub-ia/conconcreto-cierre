@@ -7,6 +7,7 @@ import { COOKIE, leer } from "@/lib/auth/cookie";
 
 const PUBLICAS = [
   /^\/ingresar$/,
+  /^\/api\/pase(\/retirar)?$/, // el pase firmado del panel (60 s, un solo uso)
   /^\/api\/cron\//, // piden Authorization: Bearer $CRON_SECRET
   /^\/api\/webhooks\//, // piden ?token=$AGENTMAIL_WEBHOOK_TOKEN
 ];

@@ -335,3 +335,12 @@ model IntentoIngreso {
 
   @@index([correo, createdAt])
 }
+
+/// Los pases del panel ya usados: cada uno entra una sola vez.
+model PaseUsado {
+  jti      String   @id
+  expiraEn DateTime
+  createdAt DateTime @default(now())
+
+  @@index([expiraEn])
+}

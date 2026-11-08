@@ -47,6 +47,7 @@ export default async function Mapa({ searchParams }: { searchParams: Promise<{ c
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
               <span className="font-display text-[12px] font-bold uppercase tracking-[.12em] text-oro">Cierre de {c.cierre.nombre}</span>
+              {process.env.FECHA_REFERENCIA && <span className="ml-3 rounded-full border border-white/20 px-2.5 py-0.5 text-[11.5px] font-semibold text-white/70">Fecha de referencia fija: {process.env.FECHA_REFERENCIA}</span>}
               <h1 className="mt-2 text-[30px] font-extrabold leading-tight text-white sm:text-[36px]">
                 {t.cuadran} de {t.sociedades} sociedades <span className="dorado">cuadran</span>
               </h1>

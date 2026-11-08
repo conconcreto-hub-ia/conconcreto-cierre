@@ -74,7 +74,7 @@ export function BotonLink({ variante = "secundario", chico, className, ...p }: C
 /* ── Superficies ────────────────────────────────────────────────────── */
 
 export function Tarjeta({ children, className, viva }: { children: ReactNode; className?: string; viva?: boolean }) {
-  return <div className={cx("rounded-sup border border-linea bg-papel", viva && "tarjeta-viva", className)}>{children}</div>;
+  return <div className={cx("superficie rounded-sup border border-linea bg-papel", viva && "tarjeta-viva", className)}>{children}</div>;
 }
 
 export function Aja({ etiqueta = "Lo que encontró el agente", children, className }: { etiqueta?: string; children: ReactNode; className?: string }) {

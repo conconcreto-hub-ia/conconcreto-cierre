@@ -26,10 +26,10 @@
   --tinta-3: #7b847e;
   --linea: #e2e7e3;
   --linea-2: #eef2ee;
-  --fondo: #f6f8f5;
+  --fondo: #f3f6f2;
   --papel: #ffffff;
   --degradado: linear-gradient(90deg, #efbf01 0%, #e3a207 55%, #d8800d 100%);
-  --r: 14px;
+  --r: 16px;
   --r-control: 10px;
 }
 
@@ -114,3 +114,28 @@ h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; marg
 .aja > * { position: relative; z-index: 1; }
 
 :focus-visible { outline: 2px solid var(--verde); outline-offset: 2px; }
+
+/* ── La barra lateral y la cabecera de cada página ──────────────────── */
+/* El mismo bloque en las cuatro apps. El contenido se corre a la derecha solo si la página tiene barra. */
+:root { --ancho-lateral: 264px; }
+.sidebar-app {
+  color: #fff;
+  background:
+    radial-gradient(420px 300px at 0% 0%, rgba(61,174,43,.16), transparent 70%),
+    radial-gradient(360px 260px at 100% 100%, rgba(239,191,1,.08), transparent 70%),
+    linear-gradient(180deg, var(--noche) 0%, var(--noche-2) 100%);
+  border-right: 1px solid rgba(255,255,255,.06);
+}
+@media (min-width: 1024px) {
+  body:has(.sidebar-app) { padding-left: var(--ancho-lateral); }
+}
+/* La cabecera: la banda oscura de siempre, ahora como tarjeta arriba del contenido */
+.cabecera { margin: 12px 12px 0; border-radius: 20px; }
+@media (min-width: 1024px) { .cabecera { margin: 20px 24px 0; } }
+
+/* Una superficie: borde fino y una sombra que apenas se nota */
+.superficie { box-shadow: 0 1px 2px rgba(7,19,12,.04), 0 10px 28px -16px rgba(7,19,12,.10); }
+
+/* Texto que llega en MAYÚSCULAS sostenidas (el SECOP): se lee en minúsculas con la primera en mayúscula */
+.oracion { text-transform: lowercase; }
+.oracion::first-letter { text-transform: uppercase; }

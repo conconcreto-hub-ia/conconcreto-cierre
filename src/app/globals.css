@@ -1,26 +1,116 @@
 @import "tailwindcss";
 
+/* ─────────────────────────────────────────────────────────────────────
+   Sistema de diseño · Conconcreto x irrelevant
+   Sale del material de S1 (Conconcreto x irrelevant - Skills S1.html):
+   noche + verde Conconcreto + el degradado oro → naranja del logo.
+   Reglas: borde antes que sombra · un solo radio de superficie (14px) ·
+   Montserrat para títulos y cifras, Work Sans para texto.
+   La página de referencia es /sistema.
+   ───────────────────────────────────────────────────────────────────── */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --noche: #07130c;
+  --noche-2: #0d2216;
+  --noche-3: #0b2a17;
+  --verde: #3dae2b;
+  --verde-profundo: #07582b;
+  --verde-suave: #eaf6e7;
+  --oro: #efbf01;
+  --oro-suave: #fff3cf;
+  --naranja: #d8800d;
+  --rojo: #c2410c;
+  --rojo-suave: #fdeee6;
+  --tinta: #141a16;
+  --tinta-2: #48514b;
+  --tinta-3: #7b847e;
+  --linea: #e2e7e3;
+  --linea-2: #eef2ee;
+  --fondo: #f6f8f5;
+  --papel: #ffffff;
+  --degradado: linear-gradient(90deg, #efbf01 0%, #e3a207 55%, #d8800d 100%);
+  --r: 14px;
+  --r-control: 10px;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-noche: var(--noche);
+  --color-noche-2: var(--noche-2);
+  --color-verde: var(--verde);
+  --color-verde-profundo: var(--verde-profundo);
+  --color-verde-suave: var(--verde-suave);
+  --color-oro: var(--oro);
+  --color-oro-suave: var(--oro-suave);
+  --color-naranja: var(--naranja);
+  --color-rojo: var(--rojo);
+  --color-rojo-suave: var(--rojo-suave);
+  --color-tinta: var(--tinta);
+  --color-tinta-2: var(--tinta-2);
+  --color-tinta-3: var(--tinta-3);
+  --color-linea: var(--linea);
+  --color-linea-2: var(--linea-2);
+  --color-fondo: var(--fondo);
+  --color-papel: var(--papel);
+  --radius-sup: var(--r);
+  --radius-ctl: var(--r-control);
+  --font-sans: var(--font-work-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-montserrat), var(--font-work-sans), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "Cascadia Code", Consolas, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+* { box-sizing: border-box; }
+html { -webkit-font-smoothing: antialiased; }
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--fondo);
+  color: var(--tinta);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.55;
 }
+h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; margin: 0; }
+.num { font-family: var(--font-display); font-variant-numeric: tabular-nums; }
+.tabular { font-variant-numeric: tabular-nums; }
+
+/* El texto con el degradado del logo */
+.dorado { background: var(--degradado); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* La banda superior oscura, con la grilla y los brillos del héroe de S1 */
+.banda {
+  position: relative; overflow: hidden; color: #fff;
+  background:
+    radial-gradient(700px 360px at 88% -40%, rgba(239,191,1,.20), transparent 60%),
+    radial-gradient(600px 420px at -8% 140%, rgba(61,174,43,.28), transparent 60%),
+    linear-gradient(160deg, var(--noche) 0%, var(--noche-2) 55%, var(--noche-3) 100%);
+}
+.banda::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image: linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at 70% 20%, #000 15%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at 70% 20%, #000 15%, transparent 70%);
+}
+.banda::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--degradado); }
+.banda > * { position: relative; z-index: 1; }
+
+/* Etiqueta de sección: rayita en degradado + mayúsculas en verde */
+.seccion-et { display: inline-flex; align-items: center; gap: 10px; font: 700 12px var(--font-display); letter-spacing: .12em; text-transform: uppercase; color: var(--verde-profundo); }
+.seccion-et::before { content: ""; width: 22px; height: 3px; border-radius: 2px; background: var(--degradado); }
+
+/* El punto que late: algo está vivo (el agente, el radar) */
+.punto-vivo { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--oro); box-shadow: 0 0 0 4px rgba(239,191,1,.2); animation: latir 2.4s ease-in-out infinite; }
+@keyframes latir { 50% { box-shadow: 0 0 0 8px rgba(239,191,1,0); } }
+@media (prefers-reduced-motion: reduce) { .punto-vivo { animation: none; } }
+
+/* Tarjeta con la línea de degradado que aparece al pasar */
+.tarjeta-viva { position: relative; overflow: hidden; transition: border-color .2s ease; }
+.tarjeta-viva::before { content: ""; position: absolute; left: 0; top: 0; right: 0; height: 3px; background: var(--degradado); transform: scaleX(0); transform-origin: left; transition: transform .25s ease; }
+.tarjeta-viva:hover { border-color: #cfd8d1; }
+.tarjeta-viva:hover::before { transform: scaleX(1); }
+
+/* El bloque «aja»: lo que el agente aporta que nadie le pidió */
+.aja { position: relative; overflow: hidden; color: #fff; border-radius: var(--r); background: linear-gradient(135deg, var(--noche-2), var(--noche-3)); }
+.aja::after { content: ""; position: absolute; right: -60px; top: -60px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(239,191,1,.28), transparent 65%); pointer-events: none; }
+.aja > * { position: relative; z-index: 1; }
+
+:focus-visible { outline: 2px solid var(--verde); outline-offset: 2px; }

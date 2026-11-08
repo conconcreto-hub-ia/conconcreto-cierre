@@ -1,0 +1,337 @@
+// El tablero del cierre · Conconcreto x irrelevant
+//
+// Cada proceso de cierre corre con su motor (código determinístico, sin modelo de por medio) y escribe aquí
+// su resultado: una Ejecucion con sus archivos y un Resultado por sociedad. El tablero lee los resultados
+// vigentes; el agente persigue lo que falta (Pendiente), cruza procesos que no cuadran entre sí (Cruce)
+// y deja cada paso en la bitácora (Evento).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// Los procesos de cierre. La clave la usan los motores (src/lib/motores).
+enum ClaveProceso {
+  pyg_base      // Felipe · Base SAP del PyG, Parte 1
+  fiducia_txt   // Laura · conciliación TXT de fiduciaria contra SAP
+  inversion     // Tatiana · inversión contra patrimonio (motor de demostración)
+  intercompania // conciliación intercompañía (skill conconcreto-conciliacion)
+}
+
+enum Estado {
+  cuadra
+  no_cuadra
+  bloqueado  // el motor se detuvo (faltan maestros, redondeo > $10, sin homologación…)
+  pendiente  // debía estar y no está
+}
+
+enum EstadoPendiente {
+  por_avisar   // el agente lo detectó y redactó el aviso; falta que una persona lo apruebe
+  avisado      // el correo salió
+  respondido   // el responsable contestó; el agente leyó la respuesta
+  resuelto     // una persona lo dio por cerrado (o llegó la ejecución que faltaba)
+}
+
+enum EstadoCruce {
+  propuesto    // el agente propuso la causa
+  aceptado     // una persona la aceptó
+  descartado
+}
+
+enum Actor {
+  agente
+  persona
+  sistema
+}
+
+model Sociedad {
+  id        String   @id @default(cuid())
+  codigo    String   @unique // el código SAP (4810, 4811…) o, para un patrimonio autónomo, 4812-<CEBE>
+  nombre    String
+  tipo      String   // matriz | filial | patrimonio
+  alias     String[] // cómo la llama cada fuente: «01» en el PyG, «1000» en los auxiliares intercompañía…
+  cebe      String?  // patrimonios autónomos: el centro de beneficio en SAP
+  fiducia   String?  // patrimonios autónomos: el código de fiducia de la homologación
+  demo      Boolean  @default(false) // datos de demostración (sociedades inventadas)
+  orden     Int      @default(0)
+  createdAt DateTime @default(now())
+
+  alcance    Alcance[]
+  resultados Resultado[]
+  pendientes Pendiente[]
+  cruces     Cruce[]
+}
+
+/// Quien responde por un proceso (o por una sociedad dentro de él). No necesita usuario en la app:
+/// el agente le escribe al correo.
+model Responsable {
+  id        String   @id @default(cuid())
+  nombre    String
+  cargo     String
+  correo    String
+  createdAt DateTime @default(now())
+
+  procesos   Proceso[]
+  alcance    Alcance[]
+  pendientes Pendiente[]
+}
+
+model Proceso {
+  id             String       @id @default(cuid())
+  clave          ClaveProceso @unique
+  nombre         String
+  dueno          String       // quién lo construyó (Laura, Felipe…)
+  diaHabil       Int          // qué día hábil del cierre tiene que estar
+  descripcion    String       @db.Text
+  demo           Boolean      @default(false) // motor de demostración, falta validar con su dueña
+  umbralRevision BigInt       @default(1000000000) // diferencias por encima de esto se marcan para revisión (COP)
+  responsableId  String
+  responsable    Responsable  @relation(fields: [responsableId], references: [id])
+  orden          Int          @default(0)
+
+  alcance     Alcance[]
+  ejecuciones Ejecucion[]
+  pendientes  Pendiente[]
+}
+
+/// Qué sociedades cubre cada proceso: las celdas del mapa. Si no hay fila, el proceso no aplica.
+model Alcance {
+  procesoId     String
+  proceso       Proceso      @relation(fields: [procesoId], references: [id], onDelete: Cascade)
+  sociedadId    String
+  sociedad      Sociedad     @relation(fields: [sociedadId], references: [id], onDelete: Cascade)
+  responsableId String?      // si una sociedad tiene su propio responsable dentro del proceso
+  responsable   Responsable? @relation(fields: [responsableId], references: [id])
+
+  @@id([procesoId, sociedadId])
+}
+
+/// Un mes de cierre. `periodo` es AAAA-MM: el mes que se cierra (el cierre corre el mes siguiente).
+model Cierre {
+  id                 String    @id @default(cuid())
+  periodo            String    @unique
+  abierto            Boolean   @default(true)
+  /// Aprobación de una persona para que el agente mande los avisos sin pedir permiso uno por uno.
+  avisosAutomaticos  Boolean   @default(false)
+  avisosAprobadosPor String?
+  avisosAprobadosEn  DateTime?
+  createdAt          DateTime  @default(now())
+
+  ejecuciones Ejecucion[]
+  pendientes  Pendiente[]
+  cruces      Cruce[]
+  reportes    Reporte[]
+  eventos     Evento[]
+}
+
+/// Una corrida de un motor: lo que entró, lo que salió, quién la corrió.
+model Ejecucion {
+  id         String   @id @default(cuid())
+  cierreId   String
+  cierre     Cierre   @relation(fields: [cierreId], references: [id], onDelete: Cascade)
+  procesoId  String
+  proceso    Proceso  @relation(fields: [procesoId], references: [id])
+  estado     Estado
+  titulo     String   // «Contree Castropol · septiembre 2026»
+  entradas   Json     // [{ nombre, huella, tamano }]
+  resumen    Json     // las cifras del motor (filas, factor, diferencias, check…)
+  detalle    Json     // la comparación línea a línea
+  mensajes   String[] // lo que el motor quiere que una persona lea (bloqueos, observaciones)
+  huella     String   // sha256 del resultado: mismo archivo, misma huella
+  corridoPor String
+  createdAt  DateTime @default(now())
+
+  resultados Resultado[]
+  archivos   Archivo[]
+  eventos    Evento[]
+
+  @@index([cierreId, procesoId, createdAt])
+}
+
+/// El estado de una sociedad en una ejecución. El mapa lee los vigentes.
+model Resultado {
+  id          String    @id @default(cuid())
+  ejecucionId String
+  ejecucion   Ejecucion @relation(fields: [ejecucionId], references: [id], onDelete: Cascade)
+  sociedadId  String
+  sociedad    Sociedad  @relation(fields: [sociedadId], references: [id])
+  procesoId   String
+  cierreId    String
+  estado      Estado
+  vigente     Boolean   @default(true)
+  diferencias Int       @default(0) // líneas con diferencia
+  marcadas    Int       @default(0) // diferencias que superan el umbral
+  valorAbs    BigInt    @default(0) // suma en valor absoluto de las diferencias (COP)
+  /// Lo que otros procesos pueden cruzar: [{ clave, etiqueta, valor }] (ej. utilidad del ejercicio de 4811).
+  salidas     Json      @default("[]")
+  nota        String?   @db.Text
+  createdAt   DateTime  @default(now())
+
+  @@index([cierreId, procesoId, sociedadId, vigente])
+}
+
+/// Archivos que genera un motor (journals, libro de conciliación, base procesada). Viven en la base.
+model Archivo {
+  id          String    @id @default(cuid())
+  ejecucionId String
+  ejecucion   Ejecucion @relation(fields: [ejecucionId], references: [id], onDelete: Cascade)
+  nombre      String
+  tipo        String    // journal | libro | base
+  contenido   Bytes
+  createdAt   DateTime  @default(now())
+}
+
+model Pendiente {
+  id            String          @id @default(cuid())
+  cierreId      String
+  cierre        Cierre          @relation(fields: [cierreId], references: [id], onDelete: Cascade)
+  procesoId     String?
+  proceso       Proceso?        @relation(fields: [procesoId], references: [id])
+  sociedadId    String?
+  sociedad      Sociedad?       @relation(fields: [sociedadId], references: [id])
+  responsableId String
+  responsable   Responsable     @relation(fields: [responsableId], references: [id])
+  clave         String          // para no repetir: falta:<proceso>:<sociedad> · revisar:<resultado>…
+  tipo          String          // falta | revision | cruce | manual
+  titulo        String
+  detalle       String          @db.Text
+  estado        EstadoPendiente @default(por_avisar)
+  venceEn       DateTime?
+  // El aviso del agente
+  asunto        String?
+  cuerpo        String?         @db.Text
+  avisadoEn     DateTime?
+  avisos        Int             @default(0)
+  hiloId        String?
+  mensajeId     String?
+  // La respuesta del responsable, leída por el agente
+  respuesta     String?         @db.Text
+  lectura       Json?           // { tipo, resumen, fecha_compromiso, instruccion_sospechosa }
+  respondidoEn  DateTime?
+  resueltoPor   String?
+  resueltoEn    DateTime?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  @@unique([cierreId, clave])
+  @@index([estado])
+}
+
+/// Dos procesos que dicen cosas distintas de la misma sociedad. La diferencia la calcula el código; la causa
+/// la propone el agente; una persona la acepta o la descarta.
+model Cruce {
+  id          String       @id @default(cuid())
+  cierreId    String
+  cierre      Cierre       @relation(fields: [cierreId], references: [id], onDelete: Cascade)
+  sociedadId  String
+  sociedad    Sociedad     @relation(fields: [sociedadId], references: [id])
+  clave       String       // la salida que se cruza (utilidad_ejercicio…)
+  etiqueta    String
+  procesoA    ClaveProceso
+  valorA      BigInt
+  resultadoA  String
+  procesoB    ClaveProceso
+  valorB      BigInt
+  resultadoB  String
+  diferencia  BigInt       // A − B, calculada por código
+  causa       Json?        // { causa, verificar[], confianza } · la escribe el modelo
+  estado      EstadoCruce  @default(propuesto)
+  revisadoPor String?
+  revisadoEn  DateTime?
+  createdAt   DateTime     @default(now())
+
+  @@unique([cierreId, sociedadId, clave, resultadoA, resultadoB])
+}
+
+/// El reporte para el comité, generado al pedirlo. Las cifras las pone el código; la lectura, el modelo.
+model Reporte {
+  id          String   @id @default(cuid())
+  cierreId    String
+  cierre      Cierre   @relation(fields: [cierreId], references: [id], onDelete: Cascade)
+  cifras      Json
+  lectura     Json?
+  generadoPor String
+  createdAt   DateTime @default(now())
+}
+
+/// Todo correo que entra o sale del buzón del agente.
+model Correo {
+  id          String   @id @default(cuid())
+  mensajeId   String   @unique
+  hiloId      String?
+  direccion   String   // entrante | saliente
+  de          String
+  para        String
+  asunto      String
+  resumen     String?  @db.Text
+  procesado   Boolean  @default(false)
+  pendienteId String?
+  recibidoEn  DateTime @default(now())
+}
+
+/// La bitácora. Cada cosa que hace el agente, el sistema o una persona.
+model Evento {
+  id          String     @id @default(cuid())
+  cierreId    String?
+  cierre      Cierre?    @relation(fields: [cierreId], references: [id], onDelete: Cascade)
+  ejecucionId String?
+  ejecucion   Ejecucion? @relation(fields: [ejecucionId], references: [id], onDelete: Cascade)
+  pendienteId String?
+  actor       Actor
+  tipo        String     // ejecucion.cargada, pendiente.creado, aviso.enviado, respuesta.leida, cruce.propuesto…
+  descripcion String
+  datos       Json?
+  createdAt   DateTime   @default(now())
+
+  @@index([cierreId, createdAt])
+  @@index([pendienteId])
+}
+
+/* ── Acceso ─────────────────────────────────────────────────────────── */
+
+enum Rol {
+  admin         // todo, más usuarios
+  contabilidad  // carga archivos, corre los motores, resuelve pendientes
+  comite        // ve el tablero y el reporte
+  consulta      // solo ver
+}
+
+model Usuario {
+  id               String    @id @default(cuid())
+  correo           String    @unique
+  nombre           String
+  rol              Rol       @default(consulta)
+  hash             String    // scrypt: sal:hash, en hex
+  activo           Boolean   @default(true)
+  debeCambiarClave Boolean   @default(true) // la clave temporal se cambia al primer ingreso
+  ultimoIngreso    DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  sesiones Sesion[]
+}
+
+/// La sesión que manda. La cookie solo lleva su id firmado: si se borra la fila (o el usuario se
+/// desactiva), la sesión muere aunque la cookie siga viva.
+model Sesion {
+  id        String   @id @default(cuid())
+  usuarioId String
+  usuario   Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  expiraEn  DateTime
+  createdAt DateTime @default(now())
+
+  @@index([usuarioId])
+}
+
+/// Para frenar a quien prueba claves: 5 fallos en 15 minutos bloquean ese correo un rato.
+model IntentoIngreso {
+  id        String   @id @default(cuid())
+  correo    String
+  exito     Boolean
+  createdAt DateTime @default(now())
+
+  @@index([correo, createdAt])
+}

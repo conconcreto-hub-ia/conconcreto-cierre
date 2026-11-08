@@ -329,8 +329,10 @@ export async function revisarBuzon(o: { maxPaginas?: number } = {}) {
     for (const [i, p] of pend.entries()) {
       const l = lectura.lecturas.find((x) => x.pendiente === i + 1);
       if (p.estado === "resuelto") continue;
-      await db.pendiente.update({ where: { id: p.id }, data: { estado: "respondido", respuesta: texto.slice(0, 4000), respondidoEn: ahora, lectura: json({ ...(l ?? { situacion: "sin_informacion", fecha_compromiso: null, resumen: "No habló de este pendiente." }), instruccion_sospechosa: lectura.instruccion_sospechosa, motivo_sospecha: lectura.motivo_sospecha }) } });
-      await evento({ cierreId: p.cierreId, pendienteId: p.id, actor: "agente", tipo: "respuesta.leida", descripcion: `${de} contestó: ${l?.resumen ?? "no habló de este pendiente"}.` });
+      // Solo pasa a «respondió» lo que la respuesta toca; lo demás sigue avisado (y le llega el recordatorio).
+      const hablo = !!l && l.situacion !== "sin_informacion";
+      await db.pendiente.update({ where: { id: p.id }, data: { estado: hablo ? "respondido" : p.estado, respuesta: texto.slice(0, 4000), respondidoEn: hablo ? ahora : p.respondidoEn, lectura: json({ ...(l ?? { situacion: "sin_informacion", fecha_compromiso: null, resumen: "No habló de este pendiente." }), instruccion_sospechosa: lectura.instruccion_sospechosa, motivo_sospecha: lectura.motivo_sospecha }) } });
+      if (hablo) await evento({ cierreId: p.cierreId, pendienteId: p.id, actor: "agente", tipo: "respuesta.leida", descripcion: `${de} contestó sobre «${p.titulo}»: ${l!.resumen}` });
     }
     if (lectura.instruccion_sospechosa) {
       sospechosos++;

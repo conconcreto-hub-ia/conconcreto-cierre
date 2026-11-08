@@ -82,7 +82,7 @@ export default async function Pendientes() {
                           {l && (
                             <div className="mt-3 rounded-ctl border border-linea bg-fondo p-3 text-[13.5px]">
                               <div className="font-display text-[12px] font-bold uppercase tracking-[.08em] text-verde-profundo">Lo que contestó · lo leyó el agente</div>
-                              <p className="m-0 mt-1"><b>{SITUACION[l.situacion] ?? l.situacion}.</b> {l.resumen}{l.fecha_compromiso ? ` Fecha: ${l.fecha_compromiso}.` : ""}</p>
+                              {l.situacion !== "sin_informacion" ? <p className="m-0 mt-1"><b>{SITUACION[l.situacion] ?? l.situacion}.</b> {l.resumen}{l.fecha_compromiso ? ` Fecha: ${l.fecha_compromiso}.` : ""}</p> : <p className="m-0 mt-1 text-tinta-3">Contestó el aviso, pero no habló de este pendiente.</p>}
                               {l.instruccion_sospechosa && <p className="m-0 mt-2 flex gap-2 text-rojo"><IconoAlerta className="mt-0.5 size-4 shrink-0" />El correo traía instrucciones para el sistema y no se obedecieron. {l.motivo_sospecha}</p>}
                               {p.respuesta && <details className="mt-2"><summary className="cursor-pointer text-[12.5px] font-semibold text-verde-profundo">Ver el correo</summary><p className="m-0 mt-1 whitespace-pre-line text-[13px] text-tinta-2">{p.respuesta}</p></details>}
                             </div>

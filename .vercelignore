@@ -1,0 +1,7 @@
+.env*
+node_modules
+.next
+datos-reales
+tmp
+*.log
+.playwright-mcp

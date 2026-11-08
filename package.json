@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev --webpack -p 3011",
-    "build": "next build --webpack",
+    "build": "prisma generate && next build --webpack",
+    "postinstall": "prisma generate",
     "start": "next start -p 3011",
     "lint": "eslint",
     "test": "vitest run",

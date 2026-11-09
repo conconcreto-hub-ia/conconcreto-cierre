@@ -1,6 +1,6 @@
 "use client";
 // La barra lateral: el logo, el menú, el estado del agente y la persona conectada. Es el mismo archivo en las
-// cuatro apps; el menú de cada una vive en ./nav.ts. En el celular se vuelve una barra superior con un menú
+// cuatro apps (cada una es independiente: su repo, su inicio de sesión); el menú de cada una vive en ./nav.ts. En el celular se vuelve una barra superior con un menú
 // que se despliega. Si la página trae cabecera (children), va como una tarjeta oscura arriba del contenido.
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -13,7 +13,7 @@ type Usuario = { nombre: string; rol: string; esAdmin?: boolean };
 
 const iniciales = (n: string) => n.split(/\s+/).filter(Boolean).slice(0, 2).map((p) => p[0]?.toUpperCase()).join("");
 
-function Contenido({ usuario, agenteActivo, panelUrl, visibles, alNavegar }: { usuario: Usuario | null; agenteActivo: boolean; panelUrl: string | null; visibles?: string[]; alNavegar?: () => void }) {
+function Contenido({ usuario, agenteActivo, visibles, alNavegar }: { usuario: Usuario | null; agenteActivo: boolean; visibles?: string[]; alNavegar?: () => void }) {
   const ruta = usePathname();
   const activo = (n: ItemNav) => (n.href === "/" ? ruta === "/" : ruta.startsWith(n.href)) || !!n.tambien?.some((t) => ruta.startsWith(t));
   return (
@@ -27,11 +27,6 @@ function Contenido({ usuario, agenteActivo, panelUrl, visibles, alNavegar }: { u
           <div className="font-display text-[19px] font-extrabold leading-tight text-white">{APP.nombre}</div>
           <div className="mt-0.5 text-[12.5px] leading-snug text-white/50">{APP.descripcion}</div>
         </div>
-        {panelUrl && (
-          <a href={panelUrl} className="mt-4 flex items-center gap-2 rounded-ctl border border-white/10 bg-white/[.04] px-3 py-2 text-[12.5px] font-semibold text-white/70 transition-colors hover:border-white/25 hover:text-white">
-            {ICONOS_MENU.hub}<span className="flex-1">Hub de IA</span><span aria-hidden className="text-white/40">↗</span>
-          </a>
-        )}
       </div>
 
       <nav className="mt-6 flex-1 space-y-0.5 overflow-y-auto px-3" aria-label="Principal">
@@ -82,7 +77,7 @@ function Contenido({ usuario, agenteActivo, panelUrl, visibles, alNavegar }: { u
 }
 
 /** visibles: si la app filtra el menú por permisos en el servidor, la lista de rutas que esta persona ve. */
-export function BarraCliente({ agenteActivo = true, children, usuario, panelUrl = null, visibles }: { agenteActivo?: boolean; children?: ReactNode; usuario: Usuario | null; panelUrl?: string | null; visibles?: string[] }) {
+export function BarraCliente({ agenteActivo = true, children, usuario, visibles }: { agenteActivo?: boolean; children?: ReactNode; usuario: Usuario | null; visibles?: string[] }) {
   const [abierto, setAbierto] = useState(false);
   const ruta = usePathname();
   useEffect(() => setAbierto(false), [ruta]);
@@ -95,7 +90,7 @@ export function BarraCliente({ agenteActivo = true, children, usuario, panelUrl 
     <>
       {/* Escritorio: fija a la izquierda */}
       <aside className="sidebar-app fixed inset-y-0 left-0 z-40 hidden w-[var(--ancho-lateral)] lg:block">
-        <Contenido usuario={usuario} agenteActivo={agenteActivo} panelUrl={panelUrl} visibles={visibles} />
+        <Contenido usuario={usuario} agenteActivo={agenteActivo} visibles={visibles} />
       </aside>
 
       {/* Celular: barra arriba y menú desplegable */}
@@ -113,7 +108,7 @@ export function BarraCliente({ agenteActivo = true, children, usuario, panelUrl 
           <button type="button" aria-label="Cerrar el menú" onClick={() => setAbierto(false)} className="absolute inset-0 bg-black/50 backdrop-blur-[2px]" />
           <div className="sidebar-app absolute inset-y-0 left-0 w-[min(300px,86vw)] shadow-2xl">
             <button type="button" onClick={() => setAbierto(false)} aria-label="Cerrar el menú" className="absolute right-3 top-4 z-10 grid size-9 place-items-center rounded-ctl text-white/60 hover:bg-white/[.06]">{ICONOS_MENU.cerrar}</button>
-            <Contenido usuario={usuario} agenteActivo={agenteActivo} panelUrl={panelUrl} visibles={visibles} alNavegar={() => setAbierto(false)} />
+            <Contenido usuario={usuario} agenteActivo={agenteActivo} visibles={visibles} alNavegar={() => setAbierto(false)} />
           </div>
         </div>
       )}

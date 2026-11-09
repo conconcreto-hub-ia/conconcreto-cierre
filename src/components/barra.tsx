@@ -8,7 +8,7 @@ import { BarraCliente } from "./barra-cliente";
 export async function Barra({ agenteActivo = true, children }: { agenteActivo?: boolean; children?: ReactNode }) {
   const u = await usuarioActual();
   return (
-    <BarraCliente agenteActivo={agenteActivo} panelUrl={process.env.PANEL_URL ?? null} usuario={u ? { nombre: u.nombre, rol: ROL[u.rol].etiqueta, esAdmin: u.rol === "admin" } : null}>
+    <BarraCliente agenteActivo={agenteActivo} usuario={u ? { nombre: u.nombre, rol: ROL[u.rol].etiqueta, esAdmin: u.rol === "admin" } : null}>
       {children}
     </BarraCliente>
   );

@@ -30,7 +30,6 @@ export const ICONOS_MENU = {
   junta: <S><path d="M3 21h18M5 21V10M19 21V10M9 21v-6M15 21v-6M2 10l10-6 10 6" /></S>,
   proyecto: <S><path d="M3 21h18M6 21V7l6-4 6 4v14" /><path d="M10 11h4M10 15h4" /></S>,
   datos: <S><ellipse cx="12" cy="5.5" rx="8" ry="2.5" /><path d="M4 5.5v6c0 1.4 3.6 2.5 8 2.5s8-1.1 8-2.5v-6M4 11.5v6c0 1.4 3.6 2.5 8 2.5s8-1.1 8-2.5v-6" /></S>,
-  hub: <S><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7L12 2.5Z" /><circle cx="12" cy="12" r="2.5" /><path d="M12 9.5V5M14.2 13.2l3.8 2.2M9.8 13.2 6 15.4" /></S>,
   salir: <S><path d="M15 4h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4" /><path d="M10 16l-4-4 4-4M6 12h10" /></S>,
   menu: <S><path d="M4 7h16M4 12h16M4 17h16" /></S>,
   cerrar: <S><path d="M6 6l12 12M18 6 6 18" /></S>,

@@ -336,7 +336,8 @@ model IntentoIngreso {
   @@index([correo, createdAt])
 }
 
-/// Los pases del panel ya usados: cada uno entra una sola vez.
+/// SIN USO desde el 9-nov-2026: era para entrar desde el hub, y cada app quedó con su propio inicio de sesión.
+/// Se puede borrar con `npx prisma db push --accept-data-loss` cuando se decida (solo guarda pases viejos).
 model PaseUsado {
   jti      String   @id
   expiraEn DateTime
